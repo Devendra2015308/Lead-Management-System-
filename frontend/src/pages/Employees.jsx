@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Plus, Edit, Trash2, User, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import {
   Table,
   TableBody,
