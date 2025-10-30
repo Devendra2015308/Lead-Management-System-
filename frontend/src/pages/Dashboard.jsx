@@ -43,6 +43,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { Button } from "@/components/ui/Button";
 
 // API configuration
 const API_CONFIG = {
