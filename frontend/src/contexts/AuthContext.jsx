@@ -1,12 +1,12 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import { authAPI } from '../services/api';
+import React, { createContext, useState, useContext, useEffect } from "react";
+import { authAPI } from "../services/api";
 
 const AuthContext = createContext();
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
@@ -20,17 +20,17 @@ export const AuthProvider = ({ children }) => {
     try {
       setError(null);
       const response = await authAPI.login(credentials);
-      
+
       // Store token in localStorage for cross-device compatibility
       if (response.data.token) {
-        localStorage.setItem('authToken', response.data.token);
-        console.log('Token stored in localStorage');
+        localStorage.setItem("authToken", response.data.token);
+        console.log("Token stored in localStorage");
       }
-      
+
       setUser(response.data.user);
       return { success: true };
     } catch (error) {
-      const errorMessage = error.response?.data?.message || 'Login failed';
+      const errorMessage = error.response?.data?.message || "Login failed";
       setError(errorMessage);
       return { success: false, error: errorMessage };
     }
@@ -42,7 +42,8 @@ export const AuthProvider = ({ children }) => {
       await authAPI.register(userData);
       return { success: true };
     } catch (error) {
-      const errorMessage = error.response?.data?.message || 'Registration failed';
+      const errorMessage =
+        error.response?.data?.message || "Registration failed";
       setError(errorMessage);
       return { success: false, error: errorMessage };
     }
@@ -52,33 +53,37 @@ export const AuthProvider = ({ children }) => {
     try {
       await authAPI.logout();
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Logout error:", error);
     } finally {
       // Clear token from localStorage
-      localStorage.removeItem('authToken');
+      localStorage.removeItem("authToken");
       setUser(null);
     }
   };
 
-  
+  const checkAuth = async () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      setLoading(false);
+      return;
+    }
 
-  // const checkAuth = async () => {
-  //   try {
-  //     const response = await authAPI.getCurrentUser();
-  //     setUser(response.data.user);
-  //   } catch (error) {
-  //     // Clear invalid token from localStorage
-  //     localStorage.removeItem('authToken');
-  //     setUser(null);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+    try {
+      // Pass token in header
+      const response = await authAPI.getCurrentUser(token);
+      setUser(response.data.user);
+    } catch (error) {
+      console.error("Auth check failed:", error);
+      localStorage.removeItem("authToken");
+      setUser(null);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  // // Check if user is authenticated on app load
-  // useEffect(() => {
-  //   checkAuth();
-  // }, []);
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   const value = {
     user,
@@ -90,9 +95,5 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated: !!user,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
