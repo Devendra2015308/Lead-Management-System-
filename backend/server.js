@@ -11,7 +11,7 @@ const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
     origin: [
-      "https://lead-management-system-black.vercel.app",
+      "https://lead-management-systems.vercel.app",
       "http://localhost:5173",
     ],
     credentials: true,
