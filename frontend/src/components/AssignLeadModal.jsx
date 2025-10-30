@@ -18,6 +18,7 @@ import {
   MapPin,
 } from "lucide-react";
 import { employeesAPI, leadsAPI, handleApiError } from "../services/api";
+import { Label } from "./ui/Label";
 
 const AssignLeadModal = ({ lead, isOpen, onClose, onAssign }) => {
   const [employees, setEmployees] = useState([]);
@@ -284,9 +285,9 @@ const AssignLeadModal = ({ lead, isOpen, onClose, onAssign }) => {
         <div className="p-6">
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <Label className="block text-sm font-medium text-gray-700 mb-2">
                 Assign to Employee
-              </label>
+              </Label>
               <Select
                 value={selectedEmployee}
                 onValueChange={handleEmployeeChange}
