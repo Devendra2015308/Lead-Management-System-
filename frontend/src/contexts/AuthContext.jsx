@@ -16,24 +16,6 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Check if user is authenticated on app load
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
-    try {
-      const response = await authAPI.getCurrentUser();
-      setUser(response.data.user);
-    } catch (error) {
-      // Clear invalid token from localStorage
-      localStorage.removeItem('authToken');
-      setUser(null);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const login = async (credentials) => {
     try {
       setError(null);
@@ -77,6 +59,26 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
     }
   };
+
+  
+
+  // const checkAuth = async () => {
+  //   try {
+  //     const response = await authAPI.getCurrentUser();
+  //     setUser(response.data.user);
+  //   } catch (error) {
+  //     // Clear invalid token from localStorage
+  //     localStorage.removeItem('authToken');
+  //     setUser(null);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // // Check if user is authenticated on app load
+  // useEffect(() => {
+  //   checkAuth();
+  // }, []);
 
   const value = {
     user,
