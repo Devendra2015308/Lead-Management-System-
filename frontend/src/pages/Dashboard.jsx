@@ -29,7 +29,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
-import { Label } from "@/components/ui/label";
+import { Label } from "@/components/ui/Label";
 import {
   PieChart,
   Pie,
