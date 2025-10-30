@@ -301,12 +301,12 @@ const Dashboard = () => {
         <div className="text-center">
           <p className="text-destructive mb-2">Error loading dashboard data</p>
           <p className="text-sm text-muted-foreground mb-4">{error}</p>
-          <button
+          <Button
             onClick={fetchDashboardData}
             className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90"
           >
             Try again
-          </button>
+          </Button>
         </div>
       </div>
     );
