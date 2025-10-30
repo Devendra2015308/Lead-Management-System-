@@ -10,7 +10,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
+} from "./ui/Select";
 
 // Define options with proper structure for Shadcn Select
 const SOURCE_OPTIONS = [
