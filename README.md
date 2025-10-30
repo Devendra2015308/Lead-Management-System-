@@ -17,6 +17,7 @@ A full-stack lead management application built with React (frontend) and Node.js
 - React 19
 - Vite
 - Tailwind CSS
+- Shadcn UI
 - React Router DOM
 - Axios for API calls
 
