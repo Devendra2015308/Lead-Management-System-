@@ -2,14 +2,20 @@ const http = require("http");
 const mongoose = require("mongoose");
 const socketIo = require("socket.io");
 const app = require("./app");
-const LeadSyncService = require("./services/leadSyncService");
+// const LeadSyncService = require("./services/leadSyncService");
 
 // Create server
 const server = http.createServer(app);
 
 // Setup socket.io
 const io = socketIo(server, {
-  cors: { origin: true, credentials: true },
+  cors: {
+    origin: [
+      "https://lead-management-system-black.vercel.app",
+      "http://localhost:5173",
+    ],
+    credentials: true,
+  },
 });
 
 // Socket logic import
@@ -24,7 +30,7 @@ mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("✅ MongoDB Connected");
-    LeadSyncService.startSynchronization();
+    // LeadSyncService.startSynchronization();
   })
   .catch(console.error);
 

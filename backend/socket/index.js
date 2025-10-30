@@ -10,7 +10,7 @@ module.exports = (io) => {
         socket.join(`user_${userData.id}`);
 
         if (userData.role === "admin") {
-          socket.join("admin_room");
+          socket.join("admin_room"); // ✅ FIX added
           console.log(`👨‍💼 Admin ${userData.id} joined admin room`);
         }
       }
