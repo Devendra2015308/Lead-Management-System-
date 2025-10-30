@@ -318,12 +318,12 @@ const Dashboard = () => {
       <div className="flex justify-center items-center min-h-[400px]">
         <div className="text-center">
           <p className="text-muted-foreground">No dashboard data available</p>
-          <button
+          <Button
             onClick={fetchDashboardData}
             className="mt-2 text-sm text-primary hover:underline"
           >
             Refresh data
-          </button>
+          </Button>
         </div>
       </div>
     );
