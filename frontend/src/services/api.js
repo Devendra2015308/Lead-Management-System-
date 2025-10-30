@@ -8,10 +8,7 @@ const api = axios.create({
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
-    Origin: window.location.origin,
   },
-  xsrfCookieName: "token",
-  xsrfHeaderName: "X-CSRF-TOKEN",
 });
 
 // Request interceptor for debugging and token handling
