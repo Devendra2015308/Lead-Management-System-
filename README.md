@@ -51,6 +51,7 @@ lead-management-system/
 │   ├── middleware/        # Express middleware
 │   ├── models/           # Mongoose models
 │   ├── routes/           # Express routes
+│   ├── services/         # Service
 │   ├── socket/           # WebSocket handlers
 │   ├── utils/            # Utility functions
 │   └── package.json
