@@ -21,13 +21,15 @@ export const AuthProvider = ({ children }) => {
       setError(null);
       const response = await authAPI.login(credentials);
 
-      // Store token in localStorage for cross-device compatibility
+      // Store token in localStorage
       if (response.data.token) {
         localStorage.setItem("authToken", response.data.token);
         console.log("Token stored in localStorage");
+
+        // After storing token, fetch user data
+        await checkAuth();
       }
 
-      setUser(response.data.user);
       return { success: true };
     } catch (error) {
       const errorMessage = error.response?.data?.message || "Login failed";
@@ -58,6 +60,7 @@ export const AuthProvider = ({ children }) => {
       // Clear token from localStorage
       localStorage.removeItem("authToken");
       setUser(null);
+      setError(null);
     }
   };
 
@@ -69,16 +72,22 @@ export const AuthProvider = ({ children }) => {
     }
 
     try {
-      // Pass token in header
-      const response = await authAPI.getCurrentUser(token);
+      // The token is automatically added by the axios interceptor
+      const response = await authAPI.getCurrentUser();
       setUser(response.data.user);
+      setError(null);
     } catch (error) {
       console.error("Auth check failed:", error);
       localStorage.removeItem("authToken");
       setUser(null);
+      setError("Session expired. Please login again.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const clearError = () => {
+    setError(null);
   };
 
   useEffect(() => {
@@ -92,6 +101,7 @@ export const AuthProvider = ({ children }) => {
     login,
     register,
     logout,
+    clearError,
     isAuthenticated: !!user,
   };
 

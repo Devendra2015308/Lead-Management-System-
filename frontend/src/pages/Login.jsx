@@ -12,7 +12,7 @@ const Login = () => {
     password: "",
   });
   const [isLoading, setIsLoading] = useState(false);
-  const { login, isAuthenticated, error } = useAuth();
+  const { login, isAuthenticated, error, clearError } = useAuth();
 
   // Redirect if already authenticated
   if (isAuthenticated) {
@@ -22,12 +22,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    clearError(); // Clear previous errors
 
     const result = await login(formData);
-
-    if (!result.success) {
-      setIsLoading(false);
-    }
+    setIsLoading(false); // Always set loading to false after login attempt
   };
 
   const handleChange = (e) => {
@@ -35,6 +33,10 @@ const Login = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    // Clear error when user starts typing
+    if (error) {
+      clearError();
+    }
   };
 
   return (
