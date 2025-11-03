@@ -13,6 +13,12 @@ const register = async (req, res) => {
   try {
     const { email, password, firstName, lastName } = req.body;
 
+    if (!email || !password || !firstName || !lastName) {
+      return res.status(400).json({
+        message: "Please fill all required fields",
+      });
+    }
+
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -84,22 +90,15 @@ const login = async (req, res) => {
     // Cookie configuration for cross-site compatibility
     const cookieOptions = {
       httpOnly: true,
-      secure: isProduction, // Only secure in production (requires HTTPS)
-      sameSite: isProduction ? "none" : "lax", // 'none' for cross-site in production
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      path: "/", // Ensure cookie is available for all paths
+      path: "/",
     };
 
     // For cross-site cookies in production, we need to be more explicit
     if (isProduction) {
-      // Don't set domain - let browser handle it automatically
-      // This allows the cookie to be sent to the exact domain
-      // cookieOptions.domain = '.onrender.com';
-
-      // Ensure sameSite is 'none' for cross-site requests
       cookieOptions.sameSite = "none";
-
-      // Ensure secure is true for sameSite: 'none'
       cookieOptions.secure = true;
     }
 
@@ -114,7 +113,7 @@ const login = async (req, res) => {
     res.json({
       status: true,
       message: "Login successful",
-      token: token, // Include token for localStorage
+      token: token,
       user: {
         id: user._id,
         email: user.email,
