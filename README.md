@@ -89,7 +89,7 @@ cd ../frontend
 npm install
 ```
 
-4. Set up environment variables
+4. Set up environment variables :
 
 Create `.env` file in the backend directory:
 
@@ -122,7 +122,7 @@ Create `.env` file in the frontend directory:
 VITE_API_URL=http://localhost:5001/api
 ```
 
-5. Run the application
+5. Run the application 
 
 Start the backend:
 
